@@ -1,7 +1,8 @@
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         String robotArt = "  +--------+\n" +
                 "  |  [::]  |\n" +
@@ -62,5 +63,19 @@ public class Main {
             }
         }
         System.out.println("Dein Roboter heißt: " + name);
+
+        int x = 0;
+        int y = 0;
+
+        while (y < 10) {
+            while (x < 14) {
+                System.out.print("[ ]");
+                x = x + 1;
+                TimeUnit.MILLISECONDS.sleep(50);
+            }
+            System.out.println("[ ]");
+            y = y + 1;
+            x= 0;
+        }
     }
 }
