@@ -71,44 +71,42 @@ public class Main {
         boolean bool3 = false;
 
         System.out.println("Wähle eine X-Koordinate");
-        int xk = scanner.nextInt();
+        int x = scanner.nextInt();
 
         while (bool2 == false) {
-            if (xk <= 15 && xk >= 0) {
+            if (x <= 15 && x >= 0) {
                 bool2 = true;
             } else {
                 System.out.println("Wähle eine Zahl im Spielfeld (15x10)");
-                xk = scanner.nextInt();
+                x = scanner.nextInt();
             }
         }
         System.out.println("wähle eine Y-Koordinate");
-        int yk = scanner.nextInt();
+        int y = scanner.nextInt();
 
         while (bool3 == false) {
-            if (yk <= 10 && yk >= 0) {
+            if (y <= 10 && y >= 0) {
                 bool3 = true;
             } else {
                 System.out.println("Wähle eine Zahl im Spielfeld (15x10)");
-                yk = scanner.nextInt();
+                y = scanner.nextInt();
             }
         }
 
         int a = 0;
         int b = 0;
-        int x = xk - 1;
-        int y = yk;
 
         while (b < 12) {
             while (a < 16) {
-                if (a == 0 || b == 0 || b == 11) {
-                    System.out.print("(X)");
-                } else {
-                    System.out.print("[ ]");
-                }
 
                 if (a == x && b == y) {
                     System.out.print("{O}");
                     a = a + 1;
+                }
+                if (a == 0 || b == 0 || b == 11) {
+                    System.out.print("(X)");
+                } else {
+                    System.out.print("[ ]");
                 }
                 a = a + 1;
                 TimeUnit.MILLISECONDS.sleep(50);
@@ -119,8 +117,8 @@ public class Main {
         }
 
         System.out.println("Der Roboter " + name + " befindet sich auf der X-Koordinate:");
-        System.out.println(xk);
+        System.out.println(x);
         System.out.println("und auf der Y-Koordinate:");
-        System.out.println(yk);
+        System.out.println(y);
     }
 }
