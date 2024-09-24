@@ -65,7 +65,35 @@ public class Main {
             }
         }
 
+        Boolean boolavatar = true;
+        String avatarstring = "";
+        while (boolavatar) {
+            System.out.println("Wähle einen der folgenden Avatare aus");
+            System.out.println("1: {0}");
+            System.out.println("2: (§)");
+            System.out.println("3: )8(");
+            System.out.println("4: /$/");
+            int avatarauswahl = scanner.nextInt();
+
+            if (avatarauswahl == 1) {
+                avatarstring = "{0}";
+                boolavatar = false;
+            } else if (avatarauswahl == 2) {
+                avatarstring = "(§)";
+                boolavatar = false;
+            } else if (avatarauswahl == 3) {
+                avatarstring = ")8(";
+                boolavatar = false;
+            } else if (avatarauswahl == 4) {
+                avatarstring = "/$/";
+                boolavatar = false;
+            } else {
+                System.out.println("Wähle eine Zahl von 1-4");
+            }
+        }
+
         System.out.println("Dein Roboter heißt: " + name);
+        System.out.println("Dein Roboter sieht so aus : " + avatarstring);
 
         boolean bool2 = false;
         boolean bool3 = false;
@@ -102,12 +130,12 @@ public class Main {
                 while (a < 16) {
 
                     if (a == x && b == y) {
-                        System.out.print("{O}");
+                        System.out.print(avatarstring);
                         a++;
-                        }
-                    else if (a == 0 || b == 0 || b == 11) {
+                    } else if (a == 0 || b == 0 || b == 11) {
                         System.out.print("(X)");
-                    } if (a > 0 && b > 0 && a < 16 && b < 11) {
+                    }
+                    if (a > 0 && b > 0 && a < 16 && b < 11) {
                         System.out.print("[ ]");
                     }
                     a = a + 1;
