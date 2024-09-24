@@ -27,7 +27,7 @@ public class Main {
         String name = scanner.nextLine();
         boolean bool = false;
 
-        while (bool == false) {
+        while (!bool) {
             if (name.contains(" ")) {
             } else if (name.contains(".")) {
             } else if (name.contains(",")) {
@@ -58,7 +58,7 @@ public class Main {
                 bool = true;
             }
 
-            if (bool == false) {
+            if (!bool) {
                 System.out.println("Dieser Name enthält verbotene Zeichen (bitte nur Zahlen und Buchstaben)");
                 System.out.println("Gebe einen anderen Namen ein");
                 name = scanner.nextLine();
@@ -73,7 +73,7 @@ public class Main {
         System.out.println("Wähle eine X-Koordinate");
         int x = scanner.nextInt();
 
-        while (bool2 == false) {
+        while (!bool2) {
             if (x <= 15 && x >= 0) {
                 bool2 = true;
             } else {
@@ -84,7 +84,7 @@ public class Main {
         System.out.println("wähle eine Y-Koordinate");
         int y = scanner.nextInt();
 
-        while (bool3 == false) {
+        while (!bool3) {
             if (y <= 10 && y >= 0) {
                 bool3 = true;
             } else {
@@ -95,30 +95,82 @@ public class Main {
 
         int a = 0;
         int b = 0;
+        boolean bool4 = true;
 
-        while (b < 12) {
-            while (a < 16) {
+        while (bool4) {
+            while (b < 12) {
+                while (a < 16) {
 
-                if (a == x && b == y) {
-                    System.out.print("{O}");
+                    if (a == x && b == y) {
+                        System.out.print("{O}");
+                        a++;
+                        }
+                    else if (a == 0 || b == 0 || b == 11) {
+                        System.out.print("(X)");
+                    } if (a > 0 && b > 0 && a < 16 && b < 11) {
+                        System.out.print("[ ]");
+                    }
                     a = a + 1;
+                    TimeUnit.MILLISECONDS.sleep(20);
                 }
-                if (a == 0 || b == 0 || b == 11) {
-                    System.out.print("(X)");
-                } else {
-                    System.out.print("[ ]");
-                }
-                a = a + 1;
-                TimeUnit.MILLISECONDS.sleep(50);
+                System.out.println("(X)");
+                b = b + 1;
+                a = 0;
             }
-            System.out.println("(X)");
-            b = b + 1;
-            a = 0;
-        }
 
-        System.out.println("Der Roboter " + name + " befindet sich auf der X-Koordinate:");
-        System.out.println(x);
-        System.out.println("und auf der Y-Koordinate:");
-        System.out.println(y);
+            System.out.println("Der Roboter " + name + " befindet sich auf der X-Koordinate:");
+            System.out.println(x);
+            System.out.println("und auf der Y-Koordinate:");
+            System.out.println(y);
+
+            boolean bool5 = false;
+            b = 0;
+
+            while (!bool5) {
+                System.out.println("Wo möchtest du den Roboter hinbewegen? (1 - oben ; 2 - rechts ; 3 - unten ; 4 - links");
+                System.out.println("Mit 5 kannst du das Spiel beenden");
+                int auswahl = scanner.nextInt();
+
+                if (auswahl == 1) {
+                    y--;
+                    if (y == 0) {
+                        System.out.println("Der Zug ist außerhalb des Spielfeldes");
+                        y++;
+                    } else {
+                        bool5 = true;
+                    }
+                } else if (auswahl == 2) {
+                    x++;
+                    if (x == 16) {
+                        System.out.println("Der Zug ist außerhalb des Spielfeldes");
+                        x--;
+                    } else {
+                        bool5 = true;
+                    }
+                } else if (auswahl == 3) {
+                    y++;
+                    if (y == 11) {
+                        System.out.println("Der Zug ist außerhalb des Spielfeldes");
+                        y--;
+                    } else {
+                        bool5 = true;
+                    }
+                } else if (auswahl == 4) {
+                    x--;
+                    if (x == 0) {
+                        System.out.println("Der Zug ist außerhalb des Spielfeldes");
+                        x++;
+                    } else {
+                        bool5 = true;
+                    }
+                } else if (auswahl == 5) {
+                    bool4 = false;
+                    bool5 = true;
+                } else {
+                    System.out.println("ungültiger Zug");
+                }
+            }
+
+        }
     }
 }
