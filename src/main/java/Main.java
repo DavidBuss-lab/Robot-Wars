@@ -2,7 +2,7 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
-    public static void spielfeldprint(int x, int y, String avatarstring, String name) throws InterruptedException {
+    public static void spielfeldprint(int spieler1x, int spieler1y, int spieler2x, int spieler2y, String avatarstrings1, String avatarstrings2, String name) throws InterruptedException {
         int a = 0;
         int b = 0;
 
@@ -10,11 +10,26 @@ public class Main {
         while (b < 12) {
             while (a < 16) {
 
-                if (a == x && b == y) {
-                    System.out.print(avatarstring);
-                    a++;
-                } else if (a == 0 || b == 0 || b == 11) {
+                if (a == 0 || b == 0 || b == 11) {
                     System.out.print("(X)");
+                }
+                if (spieler1x == spieler2x && spieler1y == spieler2y && (a == spieler1x && b == spieler1y)) {
+                    System.out.print("(A)");
+                    a++;
+                } else if ((a == spieler1x && b == spieler1y)) {
+                    System.out.print(avatarstrings1);
+                    if (spieler2x == spieler1x + 1 && spieler2y == spieler1y) {
+                        System.out.print(avatarstrings2);
+                        a++;
+                    }
+                    a++;
+                } else if (a == spieler2x && b == spieler2y) {
+                    System.out.print(avatarstrings2);
+                    if (spieler1x == spieler2x + 1 && spieler1y == spieler2y) {
+                        System.out.print(avatarstrings1);
+                        a++;
+                    }
+                    a++;
                 }
                 if (a > 0 && b > 0 && a < 16 && b < 11) {
                     System.out.print("[ ]");
@@ -28,9 +43,9 @@ public class Main {
         }
 
         System.out.println("Der Roboter " + name + " befindet sich auf der X-Koordinate:");
-        System.out.println(x);
+        System.out.println(spieler1x);
         System.out.println("und auf der Y-Koordinate:");
-        System.out.println(y);
+        System.out.println(spieler1y);
 
     }
 
@@ -183,38 +198,45 @@ public class Main {
         System.out.println(robotArt);
 
         String name = "";
-        String avatarstring = "";
+        String avatarstrings1 = "";
+        String avatarstrings2 = "";
 
         name = namensueberpruefung(name);
 
-        avatarstring = avatarauswahl(avatarstring);
+        avatarstrings1 = avatarauswahl(avatarstrings1);
+
+        System.out.println("Jetzt für deinen Gegner:");
+
+        avatarstrings2 = avatarauswahl(avatarstrings2);
 
         System.out.println("Dein Roboter heißt: " + name);
-        System.out.println("Dein Roboter sieht so aus : " + avatarstring);
+        System.out.println("Dein Roboter sieht so aus : " + avatarstrings1);
 
         boolean bool2 = false;
         boolean bool3 = false;
+        int spieler2x = 7;
+        int spieler2y = 2;
 
         System.out.println("Wähle eine X-Koordinate");
-        int x = scanner.nextInt();
+        int spieler1x = scanner.nextInt();
 
         while (!bool2) {
-            if (x <= 15 && x >= 0) {
+            if (spieler1x <= 15 && spieler1x >= 0) {
                 bool2 = true;
             } else {
                 System.out.println("Wähle eine Zahl im Spielfeld (15x10)");
-                x = scanner.nextInt();
+                spieler1x = scanner.nextInt();
             }
         }
         System.out.println("wähle eine Y-Koordinate");
-        int y = scanner.nextInt();
+        int spieler1y = scanner.nextInt();
 
         while (!bool3) {
-            if (y <= 10 && y >= 0) {
+            if (spieler1y <= 10 && spieler1y >= 0) {
                 bool3 = true;
             } else {
                 System.out.println("Wähle eine Zahl im Spielfeld (15x10)");
-                y = scanner.nextInt();
+                spieler1y = scanner.nextInt();
             }
         }
 
@@ -222,11 +244,11 @@ public class Main {
 
         while (bool4) {
 
-            spielfeldprint(x, y, avatarstring, name);
+            spielfeldprint(spieler1x, spieler1y, spieler2x, spieler2y, avatarstrings1, avatarstrings2, name);
 
-            xy = bewegung(x, y, avatarstring, name, bool4);
-            x = xy[0];
-            y = xy[1];
+            xy = bewegung(spieler1x, spieler1y, avatarstrings1, name, bool4);
+            spieler1x = xy[0];
+            spieler1y = xy[1];
 
             if (xy[2] == 1) {
                 bool4 = false;
