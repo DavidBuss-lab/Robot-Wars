@@ -41,8 +41,8 @@ public class Main {
         int[] xy = new int[3];
 
         while (!bool5) {
-            System.out.println("Wo möchtest du den Roboter hinbewegen? (1 - oben ; 2 - rechts ; 3 - unten ; 4 - links");
-            System.out.println("Mit 5 kannst du das Spiel beenden");
+            System.out.println("Wo möchtest du den Roboter hinbewegen? (1 - oben ; 2 - rechts ; 3 - unten ; 4 - links ; 5 - Verbleib auf Position)");
+            System.out.println("Mit 6 kannst du das Spiel beenden");
             int auswahl = scanner.nextInt();
 
             if (auswahl == 1) {
@@ -78,6 +78,8 @@ public class Main {
                     bool5 = true;
                 }
             } else if (auswahl == 5) {
+                bool5 = true;
+            } else if (auswahl == 6) {
                 xy[2] = 1;
                 bool5 = true;
             } else {
