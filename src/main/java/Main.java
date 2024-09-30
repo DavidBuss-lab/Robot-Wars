@@ -72,7 +72,7 @@ public class Main {
             } else if (auswahl == 4) {
                 x--;
                 if (x == 0) {
-                    System.out.println("Der Zug ist außerhalb des Spielfeldes");
+                    System.out.println("Der Zug ist außerhalb des Spielfeldes \n");
                     x++;
                 } else {
                     bool5 = true;
@@ -118,6 +118,37 @@ public class Main {
         return name;
     }
 
+    public static String avatarauswahl(String avatarstring) {
+        boolean boolavatar = true;
+        Scanner scanner = new Scanner(System.in);
+
+        while (boolavatar) {
+            System.out.println("Wähle einen der folgenden Avatare aus");
+            System.out.println("1: {0}");
+            System.out.println("2: (§)");
+            System.out.println("3: )8(");
+            System.out.println("4: /$/");
+            int avatarauswahl = scanner.nextInt();
+
+            if (avatarauswahl == 1) {
+                avatarstring = "{0}";
+                boolavatar = false;
+            } else if (avatarauswahl == 2) {
+                avatarstring = "(§)";
+                boolavatar = false;
+            } else if (avatarauswahl == 3) {
+                avatarstring = ")8(";
+                boolavatar = false;
+            } else if (avatarauswahl == 4) {
+                avatarstring = "/$/";
+                boolavatar = false;
+            } else {
+                System.out.println("Wähle eine Zahl von 1-4");
+            }
+        }
+        return avatarstring;
+    }
+
     public static void main(String[] args) throws InterruptedException {
         int[] xy = new int[2];
         boolean bool = false;
@@ -150,77 +181,53 @@ public class Main {
         System.out.println(robotArt);
 
         String name = "";
+        String avatarstring = "";
 
         name = namensueberpruefung(name);
 
-        Boolean boolavatar = true;
-        String avatarstring = "";
-        while (boolavatar) {
-            System.out.println("Wähle einen der folgenden Avatare aus");
-            System.out.println("1: {0}");
-            System.out.println("2: (§)");
-            System.out.println("3: )8(");
-            System.out.println("4: /$/");
-            int avatarauswahl = scanner.nextInt();
+        avatarstring = avatarauswahl(avatarstring);
 
-            if (avatarauswahl == 1) {
-                avatarstring = "{0}";
-                boolavatar = false;
-            } else if (avatarauswahl == 2) {
-                avatarstring = "(§)";
-                boolavatar = false;
-            } else if (avatarauswahl == 3) {
-                avatarstring = ")8(";
-                boolavatar = false;
-            } else if (avatarauswahl == 4) {
-                avatarstring = "/$/";
-                boolavatar = false;
+        System.out.println("Dein Roboter heißt: " + name);
+        System.out.println("Dein Roboter sieht so aus : " + avatarstring);
+
+        boolean bool2 = false;
+        boolean bool3 = false;
+
+        System.out.println("Wähle eine X-Koordinate");
+        int x = scanner.nextInt();
+
+        while (!bool2) {
+            if (x <= 15 && x >= 0) {
+                bool2 = true;
             } else {
-                System.out.println("Wähle eine Zahl von 1-4");
+                System.out.println("Wähle eine Zahl im Spielfeld (15x10)");
+                x = scanner.nextInt();
             }
+        }
+        System.out.println("wähle eine Y-Koordinate");
+        int y = scanner.nextInt();
 
-            System.out.println("Dein Roboter heißt: " + name);
-            System.out.println("Dein Roboter sieht so aus : " + avatarstring);
-
-            boolean bool2 = false;
-            boolean bool3 = false;
-
-            System.out.println("Wähle eine X-Koordinate");
-            int x = scanner.nextInt();
-
-            while (!bool2) {
-                if (x <= 15 && x >= 0) {
-                    bool2 = true;
-                } else {
-                    System.out.println("Wähle eine Zahl im Spielfeld (15x10)");
-                    x = scanner.nextInt();
-                }
+        while (!bool3) {
+            if (y <= 10 && y >= 0) {
+                bool3 = true;
+            } else {
+                System.out.println("Wähle eine Zahl im Spielfeld (15x10)");
+                y = scanner.nextInt();
             }
-            System.out.println("wähle eine Y-Koordinate");
-            int y = scanner.nextInt();
+        }
 
-            while (!bool3) {
-                if (y <= 10 && y >= 0) {
-                    bool3 = true;
-                } else {
-                    System.out.println("Wähle eine Zahl im Spielfeld (15x10)");
-                    y = scanner.nextInt();
-                }
-            }
+        boolean bool4 = true;
 
-            boolean bool4 = true;
+        while (bool4) {
 
-            while (bool4) {
+            spielfeldprint(x, y, avatarstring, name);
 
-                spielfeldprint(x, y, avatarstring, name);
+            xy = bewegung(x, y, avatarstring, name, bool4);
+            x = xy[0];
+            y = xy[1];
 
-                xy = bewegung(x, y, avatarstring, name, bool4);
-                x = xy[0];
-                y = xy[1];
-
-                if (xy[2] == 1){
-                    bool4 = false;
-                }
+            if (xy[2] == 1) {
+                bool4 = false;
             }
         }
     }
