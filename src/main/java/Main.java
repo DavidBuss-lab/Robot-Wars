@@ -109,7 +109,7 @@ public class Main {
     public static String namensueberpruefung(String name) {
         boolean bool = false;
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Willkommen bei Robot-Wars, wähle einen Namen für deinen Roboter");
+        System.out.println("Wähle einen Namen für den Roboter");
 
         while (!bool) {
             name = scanner.nextLine();
@@ -197,11 +197,18 @@ public class Main {
 
         System.out.println(robotArt);
 
-        String name = "";
+        String names1 = "";
+        String names2 = "";
         String avatarstrings1 = "";
         String avatarstrings2 = "";
 
-        name = namensueberpruefung(name);
+        System.out.println("Herzlich Willkommen bei Robot-Wars");
+        System.out.println("Spieler:");
+
+        names1 = namensueberpruefung(names1);
+
+        System.out.println("Jetzt für deinen Gegner: ");
+        names2 = namensueberpruefung(names2);
 
         avatarstrings1 = avatarauswahl(avatarstrings1);
 
@@ -209,8 +216,10 @@ public class Main {
 
         avatarstrings2 = avatarauswahl(avatarstrings2);
 
-        System.out.println("Dein Roboter heißt: " + name);
+        System.out.println("Dein Roboter heißt: " + names1);
         System.out.println("Dein Roboter sieht so aus : " + avatarstrings1);
+        System.out.println("Dein Gegner heißt: " + names2);
+        System.out.println("Dein Gegner sieht so aus : " + avatarstrings2);
 
         boolean bool2 = false;
         boolean bool3 = false;
@@ -244,9 +253,9 @@ public class Main {
 
         while (bool4) {
 
-            spielfeldprint(spieler1x, spieler1y, spieler2x, spieler2y, avatarstrings1, avatarstrings2, name);
+            spielfeldprint(spieler1x, spieler1y, spieler2x, spieler2y, avatarstrings1, avatarstrings2, names1);
 
-            xy = bewegung(spieler1x, spieler1y, avatarstrings1, name, bool4);
+            xy = bewegung(spieler1x, spieler1y, avatarstrings1, names1, bool4);
             spieler1x = xy[0];
             spieler1y = xy[1];
 
