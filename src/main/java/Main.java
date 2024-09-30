@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -226,7 +227,7 @@ public class Main {
         int spieler2x = 7;
         int spieler2y = 2;
 
-        System.out.println("Wähle eine X-Koordinate");
+        System.out.println("\nWähle eine X-Koordinate");
         int spieler1x = scanner.nextInt();
 
         while (!bool2) {
@@ -237,7 +238,7 @@ public class Main {
                 spieler1x = scanner.nextInt();
             }
         }
-        System.out.println("wähle eine Y-Koordinate");
+        System.out.println("\nwähle eine Y-Koordinate");
         int spieler1y = scanner.nextInt();
 
         while (!bool3) {
@@ -261,6 +262,49 @@ public class Main {
 
             if (xy[2] == 1) {
                 bool4 = false;
+            }
+            if (spieler1x == spieler2x && spieler1y == spieler2y) {
+
+                spielfeldprint(spieler1x, spieler1y, spieler2x, spieler2y, avatarstrings1, avatarstrings2, names1);
+                TimeUnit.MILLISECONDS.sleep(3000);
+
+                System.out.println("Es kommt zu einem Kampf");
+                TimeUnit.MILLISECONDS.sleep(500);
+
+                System.out.println(names1 + " würfelt");
+                TimeUnit.MILLISECONDS.sleep(2000);
+                int wuerfels1 = (int) (Math.random() * 6) + 1;
+                System.out.println(names1 + " hat folgendes gewürfelt: " + wuerfels1);
+                TimeUnit.MILLISECONDS.sleep(2000);
+
+                System.out.println(names2 + " würfelt");
+                TimeUnit.MILLISECONDS.sleep(2000);
+                int wuerfels2 = (int) (Math.random() * 6) + 1;
+                System.out.println(names2 + " hat folgendes gewürfelt: " + wuerfels2);
+                TimeUnit.MILLISECONDS.sleep(2000);
+
+                if (wuerfels1 > wuerfels2) {
+                    System.out.print(" .----------------.  .----------------.  .----------------.  .----------------.  .-----------------. .-----------------. .----------------.  .-----------------.\n" +
+                            "| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |\n" +
+                            "| |    ______    | || |  _________   | || | _____  _____ | || |     ____     | || | ____  _____  | || | ____  _____  | || |  _________   | || | ____  _____  | |\n" +
+                            "| |  .' ___  |   | || | |_   ___  |  | || ||_   _||_   _|| || |   .'    `.   | || ||_   \\|_   _| | || ||_   \\|_   _| | || | |_   ___  |  | || ||_   \\|_   _| | |\n" +
+                            "| | / .'   \\_|   | || |   | |_  \\_|  | || |  | | /\\ | |  | || |  /  .--.  \\  | || |  |   \\ | |   | || |  |   \\ | |   | || |   | |_  \\_|  | || |  |   \\ | |   | |\n" +
+                            "| | | |    ____  | || |   |  _|  _   | || |  | |/  \\| |  | || |  | |    | |  | || |  | |\\ \\| |   | || |  | |\\ \\| |   | || |   |  _|  _   | || |  | |\\ \\| |   | |\n" +
+                            "| | \\ `.___]  _| | || |  _| |___/ |  | || |  |   /\\   |  | || |  \\  `--'  /  | || | _| |_\\   |_  | || | _| |_\\   |_  | || |  _| |___/ |  | || | _| |_\\   |_  | |\n" +
+                            "| |  `._____.'   | || | |_________|  | || |  |__/  \\__|  | || |   `.____.'   | || ||_____|\\____| | || ||_____|\\____| | || | |_________|  | || ||_____|\\____| | |\n" +
+                            "| |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | |\n" +
+                            "| '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |\n" +
+                            " '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'");
+                    System.out.println("\n Herzlichen Glückwunsch " + names1 + " du hast gewonnen!");
+                    bool4 = false;
+                } else if (wuerfels1 == wuerfels2) {
+                    System.out.println("Das ist ein Unentschieden und es wird erneut gewürfelt");
+                    TimeUnit.MILLISECONDS.sleep(2000);
+                }
+                else {
+                    System.out.println("Dein Gegner " + names2 + " hat dich im Kampf bezwungen, viel Glück beim nächsten mal!");
+                    bool4 = false;
+                }
             }
         }
     }
