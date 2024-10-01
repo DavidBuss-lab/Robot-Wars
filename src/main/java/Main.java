@@ -167,12 +167,53 @@ public class Main {
         return avatarstring;
     }
 
+    public static String farbe(String name, String farbes1) {
+        Scanner scanner = new Scanner(System.in);
+        String farbe = "";
+        boolean check = false;
+
+        System.out.println("\n" + name + " welche Farbe soll dein Robo haben?");
+        System.out.println("\u001b[31;1m1. Rot");
+        System.out.println("\u001b[32;1m2. Grün");
+        System.out.println("\u001b[33;1m3. Gelb");
+        System.out.println("\u001b[34;1m4. Blau");
+        System.out.println("\u001b[35;1m5. Magenta\u001b[0m");
+
+        while (!check) {
+            int auswahl = scanner.nextInt();
+            if (auswahl == 1) {
+                farbe = "\u001b[31;1m";
+                check = true;
+            } else if (auswahl == 2) {
+                farbe = "\u001b[32;1m";
+                check = true;
+            } else if (auswahl == 3) {
+                farbe = "\u001b[33;1m";
+                check = true;
+            } else if (auswahl == 4) {
+                farbe = "\u001b[34;1m";
+                check = true;
+            } else if (auswahl == 5) {
+                farbe = "\u001b[35;1m";
+                check = true;
+            } else {
+                System.out.println("Wähle eine Zahl zwischen 1 und 5");
+            }
+            if (farbe.equals(farbes1) && !farbes1.isEmpty()) {
+                System.out.println("\nbitte wähle eine andere Farbe als dein Gegner");
+                check = false;
+            }
+        }
+        return farbe;
+    }
+
+
     public static void main(String[] args) throws InterruptedException {
         int[] xy = new int[2];
         boolean bool = false;
         Scanner scanner = new Scanner(System.in);
 
-        String robotArt = "          _____                   _______                   _____                   _______               _____                    _____                    _____                    _____                    _____          \n" +
+        String robotArt = "\u001b[31;1m          _____                   _______                   _____                   _______               _____                    _____                    _____                    _____                    _____          \n" +
                 "         /\\    \\                 /::\\    \\                 /\\    \\                 /::\\    \\             /\\    \\                  /\\    \\                  /\\    \\                  /\\    \\                  /\\    \\         \n" +
                 "        /::\\    \\               /::::\\    \\               /::\\    \\               /::::\\    \\           /::\\    \\                /::\\____\\                /::\\    \\                /::\\    \\                /::\\    \\        \n" +
                 "       /::::\\    \\             /::::::\\    \\             /::::\\    \\             /::::::\\    \\          \\:::\\    \\              /:::/    /               /::::\\    \\              /::::\\    \\              /::::\\    \\       \n" +
@@ -196,26 +237,36 @@ public class Main {
                 "                                                                                                                                                                                                                      ";
 
 
-        System.out.println(robotArt);
+        System.out.println(robotArt + "\u001b[0m");
 
         String names1 = "";
         String names2 = "";
         String avatarstrings1 = "";
         String avatarstrings2 = "";
+        String farbes1 = "";
+        String farbes2 = "";
 
         System.out.println("Herzlich Willkommen bei Robot-Wars");
         System.out.println("Spieler:");
 
         names1 = namensueberpruefung(names1);
 
-        System.out.println("Jetzt für deinen Gegner: ");
-        names2 = namensueberpruefung(names2);
-
         avatarstrings1 = avatarauswahl(avatarstrings1);
+
+        farbes1 = farbe(names1, farbes1);
 
         System.out.println("Jetzt für deinen Gegner:");
 
+        names2 = namensueberpruefung(names2);
+
         avatarstrings2 = avatarauswahl(avatarstrings2);
+
+        farbes2 = farbe(names2, farbes1);
+
+        names1 = farbes1 + names1 + "\u001b[0m";
+        avatarstrings1 = farbes1 + avatarstrings1 + "\u001b[0m";
+        names2 = farbes2 + names2 + "\u001b[0m";
+        avatarstrings2 = farbes2 + avatarstrings2 + "\u001b[0m";
 
         System.out.println("Dein Roboter heißt: " + names1);
         System.out.println("Dein Roboter sieht so aus : " + avatarstrings1);
@@ -263,7 +314,8 @@ public class Main {
             if (xy[2] == 1) {
                 bool4 = false;
             }
-            if (spieler1x == spieler2x && spieler1y == spieler2y) {
+
+            while (spieler1x == spieler2x && spieler1y == spieler2y && bool4) {
 
                 spielfeldprint(spieler1x, spieler1y, spieler2x, spieler2y, avatarstrings1, avatarstrings2, names1);
                 TimeUnit.MILLISECONDS.sleep(3000);
@@ -284,7 +336,7 @@ public class Main {
                 TimeUnit.MILLISECONDS.sleep(2000);
 
                 if (wuerfels1 > wuerfels2) {
-                    System.out.print(" .----------------.  .----------------.  .----------------.  .----------------.  .-----------------. .-----------------. .----------------.  .-----------------.\n" +
+                    System.out.print("\u001b[32;1m .----------------.  .----------------.  .----------------.  .----------------.  .-----------------. .-----------------. .----------------.  .-----------------.\n" +
                             "| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |\n" +
                             "| |    ______    | || |  _________   | || | _____  _____ | || |     ____     | || | ____  _____  | || | ____  _____  | || |  _________   | || | ____  _____  | |\n" +
                             "| |  .' ___  |   | || | |_   ___  |  | || ||_   _||_   _|| || |   .'    `.   | || ||_   \\|_   _| | || ||_   \\|_   _| | || | |_   ___  |  | || ||_   \\|_   _| | |\n" +
@@ -295,13 +347,12 @@ public class Main {
                             "| |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | |\n" +
                             "| '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |\n" +
                             " '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'");
-                    System.out.println("\n Herzlichen Glückwunsch " + names1 + " du hast gewonnen!");
+                    System.out.println("\n\u001b[0m Herzlichen Glückwunsch " + names1 + " du hast gewonnen!");
                     bool4 = false;
                 } else if (wuerfels1 == wuerfels2) {
                     System.out.println("Das ist ein Unentschieden und es wird erneut gewürfelt");
                     TimeUnit.MILLISECONDS.sleep(2000);
-                }
-                else {
+                } else {
                     System.out.println("Dein Gegner " + names2 + " hat dich im Kampf bezwungen, viel Glück beim nächsten mal!");
                     bool4 = false;
                 }
