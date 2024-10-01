@@ -12,10 +12,10 @@ public class Main {
             while (a < 16) {
 
                 if (a == 0 || b == 0 || b == 11) {
-                    System.out.print("(X)");
+                    System.out.print("\u001b[31m(X)\u001b[0m");
                 }
                 if (spieler1x == spieler2x && spieler1y == spieler2y && (a == spieler1x && b == spieler1y)) {
-                    System.out.print("(A)");
+                    System.out.print("\u001b[31;1m(A)\u001b[0m");
                     a++;
                 } else if ((a == spieler1x && b == spieler1y)) {
                     System.out.print(avatarstrings1);
@@ -36,9 +36,8 @@ public class Main {
                     System.out.print("[ ]");
                 }
                 a = a + 1;
-                TimeUnit.MILLISECONDS.sleep(20);
             }
-            System.out.println("(X)");
+            System.out.println("\u001b[31m(X)\u001b[0m");
             b = b + 1;
             a = 0;
         }
@@ -57,11 +56,11 @@ public class Main {
         int[] xy = new int[3];
 
         while (!bool5) {
-            System.out.println("Wo möchtest du den Roboter hinbewegen? (1 - oben ; 2 - rechts ; 3 - unten ; 4 - links ; 5 - Verbleib auf Position)");
-            System.out.println("Mit 6 kannst du das Spiel beenden");
-            int auswahl = scanner.nextInt();
+            System.out.println("Wo möchtest du den Roboter hinbewegen? (w - oben ; a - links ; s - unten  ; d - rechts ; b - Verbleib auf Position)");
+            System.out.println("Mit q kannst du das Spiel beenden");
+            String auswahl = scanner.nextLine();
 
-            if (auswahl == 1) {
+            if (auswahl.equals("w")) {
                 y--;
                 if (y == 0) {
                     System.out.println("Der Zug ist außerhalb des Spielfeldes");
@@ -69,7 +68,7 @@ public class Main {
                 } else {
                     bool5 = true;
                 }
-            } else if (auswahl == 2) {
+            } else if (auswahl.equals("d")) {
                 x++;
                 if (x == 16) {
                     System.out.println("Der Zug ist außerhalb des Spielfeldes");
@@ -77,7 +76,7 @@ public class Main {
                 } else {
                     bool5 = true;
                 }
-            } else if (auswahl == 3) {
+            } else if (auswahl.equals("s")) {
                 y++;
                 if (y == 11) {
                     System.out.println("Der Zug ist außerhalb des Spielfeldes");
@@ -85,7 +84,7 @@ public class Main {
                 } else {
                     bool5 = true;
                 }
-            } else if (auswahl == 4) {
+            } else if (auswahl.equals("a")) {
                 x--;
                 if (x == 0) {
                     System.out.println("Der Zug ist außerhalb des Spielfeldes \n");
@@ -93,9 +92,9 @@ public class Main {
                 } else {
                     bool5 = true;
                 }
-            } else if (auswahl == 5) {
+            } else if (auswahl.equals("b")) {
                 bool5 = true;
-            } else if (auswahl == 6) {
+            } else if (auswahl.equals("q")) {
                 xy[2] = 1;
                 bool5 = true;
             } else {
@@ -318,7 +317,7 @@ public class Main {
             while (spieler1x == spieler2x && spieler1y == spieler2y && bool4) {
 
                 spielfeldprint(spieler1x, spieler1y, spieler2x, spieler2y, avatarstrings1, avatarstrings2, names1);
-                TimeUnit.MILLISECONDS.sleep(3000);
+                TimeUnit.MILLISECONDS.sleep(1000);
 
                 System.out.println("Es kommt zu einem Kampf");
                 TimeUnit.MILLISECONDS.sleep(500);
