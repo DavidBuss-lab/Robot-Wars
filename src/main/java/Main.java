@@ -211,6 +211,7 @@ public class Main {
         int[] xy = new int[2];
         boolean bool = false;
         Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
 
         String robotArt = "\u001b[31;1m          _____                   _______                   _____                   _______               _____                    _____                    _____                    _____                    _____          \n" +
                 "         /\\    \\                 /::\\    \\                 /\\    \\                 /::\\    \\             /\\    \\                  /\\    \\                  /\\    \\                  /\\    \\                  /\\    \\         \n" +
@@ -324,13 +325,13 @@ public class Main {
 
                 System.out.println(names1 + " würfelt");
                 TimeUnit.MILLISECONDS.sleep(2000);
-                int wuerfels1 = (int) (Math.random() * 6) + 1;
+                int wuerfels1 = random.nextInt(6) + 1;
                 System.out.println(names1 + " hat folgendes gewürfelt: " + wuerfels1);
                 TimeUnit.MILLISECONDS.sleep(2000);
 
                 System.out.println(names2 + " würfelt");
                 TimeUnit.MILLISECONDS.sleep(2000);
-                int wuerfels2 = (int) (Math.random() * 6) + 1;
+                int wuerfels2 = random.nextInt(6) + 1;
                 System.out.println(names2 + " hat folgendes gewürfelt: " + wuerfels2);
                 TimeUnit.MILLISECONDS.sleep(2000);
 
