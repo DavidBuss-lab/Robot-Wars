@@ -1,59 +1,59 @@
+import java.awt.*;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
-    public static void spielfeldprint(int spieler1x, int spieler1y, int spieler2x, int spieler2y, String avatarstrings1, String avatarstrings2, String name) throws InterruptedException {
-        int a = 0;
-        int b = 0;
+
+    public static void spielfeldprint(Point currentPositionS1, Point currentPositionS2, String avatarstrings1, String avatarstrings2, String name) throws InterruptedException {
+        int[][] spielfeldValue = {{3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+                {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
+                {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
+                {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
+                {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
+                {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
+                {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
+                {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
+                {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
+                {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
+                {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
+                {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3}};
+
 
         System.out.println("\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n");
-        while (b < 12) {
-            while (a < 16) {
 
-                if (a == 0 || b == 0 || b == 11) {
-                    System.out.print("\u001b[31m(X)\u001b[0m");
-                }
-                if (spieler1x == spieler2x && spieler1y == spieler2y && (a == spieler1x && b == spieler1y)) {
+        spielfeldValue[currentPositionS1.y][currentPositionS1.x] = 1;
+        spielfeldValue[currentPositionS2.y][currentPositionS2.x] = 2;
+
+        for (int i = 0; i < spielfeldValue.length; i++) {
+            for (int j = 0; j < spielfeldValue[i].length; j++) {
+                if ((currentPositionS1.equals(currentPositionS2)) && spielfeldValue[i][j] == 2) {
                     System.out.print("\u001b[31;1m(A)\u001b[0m");
-                    a++;
-                } else if ((a == spieler1x && b == spieler1y)) {
-                    System.out.print(avatarstrings1);
-                    if (spieler2x == spieler1x + 1 && spieler2y == spieler1y) {
-                        System.out.print(avatarstrings2);
-                        a++;
-                    }
-                    a++;
-                } else if (a == spieler2x && b == spieler2y) {
-                    System.out.print(avatarstrings2);
-                    if (spieler1x == spieler2x + 1 && spieler1y == spieler2y) {
-                        System.out.print(avatarstrings1);
-                        a++;
-                    }
-                    a++;
-                }
-                if (a > 0 && b > 0 && a < 16 && b < 11) {
+                } else if (spielfeldValue[i][j] == 0) {
                     System.out.print("[ ]");
+                } else if (spielfeldValue[i][j] == 1) {
+                    System.out.print(avatarstrings1);
+                } else if (spielfeldValue[i][j] == 2) {
+                    System.out.print(avatarstrings2);
+                } else if (spielfeldValue[i][j] == 3) {
+                    System.out.print("\u001b[31;1m(X)\u001b[0m");
                 }
-                a = a + 1;
             }
-            System.out.println("\u001b[31m(X)\u001b[0m");
-            b = b + 1;
-            a = 0;
+            System.out.println();
         }
 
+
         System.out.println("Der Roboter " + name + " befindet sich auf der X-Koordinate:");
-        System.out.println(spieler1x);
+        System.out.println(currentPositionS1.x);
         System.out.println("und auf der Y-Koordinate:");
-        System.out.println(spieler1y);
+        System.out.println(currentPositionS1.y);
 
     }
 
-    public static int[] bewegung(int x, int y, String avatarstring, String name, boolean bool4) {
+    public static Point bewegung(Point currentPosition, String avatarstring, String name, boolean bool4) {
         boolean bool5 = false;
         int b = 0;
         Scanner scanner = new Scanner(System.in);
-        int[] xy = new int[3];
 
         while (!bool5) {
             System.out.println("Wo möchtest du den Roboter hinbewegen? (w - oben ; a - links ; s - unten  ; d - rechts ; b - Verbleib auf Position)");
@@ -61,50 +61,49 @@ public class Main {
             String auswahl = scanner.nextLine();
 
             if (auswahl.equals("w")) {
-                y--;
-                if (y == 0) {
+                currentPosition.y--;
+                if (currentPosition.y == 0) {
                     System.out.println("Der Zug ist außerhalb des Spielfeldes");
-                    y++;
+                    currentPosition.y++;
                 } else {
                     bool5 = true;
                 }
             } else if (auswahl.equals("d")) {
-                x++;
-                if (x == 16) {
+                currentPosition.x++;
+                if (currentPosition.x == 16) {
                     System.out.println("Der Zug ist außerhalb des Spielfeldes");
-                    x--;
+                    currentPosition.x--;
                 } else {
                     bool5 = true;
                 }
             } else if (auswahl.equals("s")) {
-                y++;
-                if (y == 11) {
+                currentPosition.y++;
+                if (currentPosition.y == 11) {
                     System.out.println("Der Zug ist außerhalb des Spielfeldes");
-                    y--;
+                    currentPosition.y--;
                 } else {
                     bool5 = true;
                 }
             } else if (auswahl.equals("a")) {
-                x--;
-                if (x == 0) {
+                currentPosition.x--;
+                if (currentPosition.x == 0) {
                     System.out.println("Der Zug ist außerhalb des Spielfeldes \n");
-                    x++;
+                    currentPosition.x++;
                 } else {
                     bool5 = true;
                 }
             } else if (auswahl.equals("b")) {
                 bool5 = true;
             } else if (auswahl.equals("q")) {
-                xy[2] = 1;
+                currentPosition.x = 29;
                 bool5 = true;
             } else {
                 System.out.println("ungültiger Zug");
             }
         }
-        xy[0] = x;
-        xy[1] = y;
-        return xy;
+        return currentPosition;
     }
+
 
     public static String namensueberpruefung(String name) {
         boolean bool = false;
@@ -206,12 +205,70 @@ public class Main {
         return farbe;
     }
 
+    private static void spielAblauf(Point currentPositionS1, Point currentPositionS2, String avatarstrings1, String avatarstrings2, String names1, String names2) throws InterruptedException {
+        boolean bool4 = true;
+        Random random = new Random();
+
+        while (bool4) {
+
+            spielfeldprint(currentPositionS1, currentPositionS2, avatarstrings1, avatarstrings2, names1);
+
+            currentPositionS1 = bewegung(currentPositionS1, avatarstrings1, names1, bool4);
+
+            if (currentPositionS1.x == 29) {
+                break;
+            }
+
+            while (currentPositionS1.x == currentPositionS2.x && currentPositionS1.y == currentPositionS2.y) {
+                bool4 = false;
+
+                spielfeldprint(currentPositionS1, currentPositionS2, avatarstrings1, avatarstrings2, names1);
+                TimeUnit.MILLISECONDS.sleep(1000);
+
+                System.out.println("Es kommt zu einem Kampf");
+                TimeUnit.MILLISECONDS.sleep(500);
+
+                System.out.println(names1 + " würfelt");
+                TimeUnit.MILLISECONDS.sleep(2000);
+                int wuerfels1 = random.nextInt(6) + 1;
+                System.out.println(names1 + " hat folgendes gewürfelt: " + wuerfels1);
+                TimeUnit.MILLISECONDS.sleep(2000);
+
+                System.out.println(names2 + " würfelt");
+                TimeUnit.MILLISECONDS.sleep(2000);
+                int wuerfels2 = random.nextInt(6) + 1;
+                System.out.println(names2 + " hat folgendes gewürfelt: " + wuerfels2);
+                TimeUnit.MILLISECONDS.sleep(2000);
+
+                if (wuerfels1 > wuerfels2) {
+                    System.out.print("\n\u001b[32;1m .----------------.  .----------------.  .----------------.  .----------------.  .-----------------. .-----------------. .----------------.  .-----------------.\n" +
+                            "| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |\n" +
+                            "| |    ______    | || |  _________   | || | _____  _____ | || |     ____     | || | ____  _____  | || | ____  _____  | || |  _________   | || | ____  _____  | |\n" +
+                            "| |  .' ___  |   | || | |_   ___  |  | || ||_   _||_   _|| || |   .'    `.   | || ||_   \\|_   _| | || ||_   \\|_   _| | || | |_   ___  |  | || ||_   \\|_   _| | |\n" +
+                            "| | / .'   \\_|   | || |   | |_  \\_|  | || |  | | /\\ | |  | || |  /  .--.  \\  | || |  |   \\ | |   | || |  |   \\ | |   | || |   | |_  \\_|  | || |  |   \\ | |   | |\n" +
+                            "| | | |    ____  | || |   |  _|  _   | || |  | |/  \\| |  | || |  | |    | |  | || |  | |\\ \\| |   | || |  | |\\ \\| |   | || |   |  _|  _   | || |  | |\\ \\| |   | |\n" +
+                            "| | \\ `.___]  _| | || |  _| |___/ |  | || |  |   /\\   |  | || |  \\  `--'  /  | || | _| |_\\   |_  | || | _| |_\\   |_  | || |  _| |___/ |  | || | _| |_\\   |_  | |\n" +
+                            "| |  `._____.'   | || | |_________|  | || |  |__/  \\__|  | || |   `.____.'   | || ||_____|\\____| | || ||_____|\\____| | || | |_________|  | || ||_____|\\____| | |\n" +
+                            "| |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | |\n" +
+                            "| '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |\n" +
+                            " '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'");
+                    System.out.println("\n\n\u001b[0m Herzlichen Glückwunsch " + names1 + " du hast gewonnen!");
+                    break;
+                } else if (wuerfels1 == wuerfels2) {
+                    System.out.println("Das ist ein Unentschieden und es wird erneut gewürfelt");
+                    TimeUnit.MILLISECONDS.sleep(2000);
+                } else {
+                    System.out.println("Dein Gegner " + names2 + " hat dich im Kampf bezwungen, viel Glück beim nächsten mal!");
+                    break;
+                }
+            }
+        }
+    }
 
     public static void main(String[] args) throws InterruptedException {
-        int[] xy = new int[2];
-        boolean bool = false;
+        Point currentPositionS1 = new Point(0, 0);
+        Point currentPositionS2 = new Point(7, 2);
         Scanner scanner = new Scanner(System.in);
-        Random random = new Random();
 
         String robotArt = "\u001b[31;1m          _____                   _______                   _____                   _______               _____                    _____                    _____                    _____                    _____          \n" +
                 "         /\\    \\                 /::\\    \\                 /\\    \\                 /::\\    \\             /\\    \\                  /\\    \\                  /\\    \\                  /\\    \\                  /\\    \\         \n" +
@@ -273,90 +330,31 @@ public class Main {
         System.out.println("Dein Gegner heißt: " + names2);
         System.out.println("Dein Gegner sieht so aus : " + avatarstrings2);
 
-        boolean bool2 = false;
-        boolean bool3 = false;
-        int spieler2x = 7;
-        int spieler2y = 2;
+        boolean checkxInBound = false;
+        boolean checkyInBound = false;
 
         System.out.println("\nWähle eine X-Koordinate");
-        int spieler1x = scanner.nextInt();
+        currentPositionS1.x = scanner.nextInt();
 
-        while (!bool2) {
-            if (spieler1x <= 15 && spieler1x >= 0) {
-                bool2 = true;
+        while (!checkxInBound) {
+            if (currentPositionS1.x < 16 && currentPositionS1.x > 0) {
+                checkxInBound = true;
             } else {
                 System.out.println("Wähle eine Zahl im Spielfeld (15x10)");
-                spieler1x = scanner.nextInt();
+                currentPositionS1.x = scanner.nextInt();
             }
         }
         System.out.println("\nwähle eine Y-Koordinate");
-        int spieler1y = scanner.nextInt();
+        currentPositionS1.y = scanner.nextInt();
 
-        while (!bool3) {
-            if (spieler1y <= 10 && spieler1y >= 0) {
-                bool3 = true;
+        while (!checkyInBound) {
+            if (currentPositionS1.y <= 10 && currentPositionS1.y >= 0) {
+                checkyInBound = true;
             } else {
                 System.out.println("Wähle eine Zahl im Spielfeld (15x10)");
-                spieler1y = scanner.nextInt();
+                currentPositionS1.y = scanner.nextInt();
             }
         }
-
-        boolean bool4 = true;
-
-        while (bool4) {
-
-            spielfeldprint(spieler1x, spieler1y, spieler2x, spieler2y, avatarstrings1, avatarstrings2, names1);
-
-            xy = bewegung(spieler1x, spieler1y, avatarstrings1, names1, bool4);
-            spieler1x = xy[0];
-            spieler1y = xy[1];
-
-            if (xy[2] == 1) {
-                bool4 = false;
-            }
-
-            while (spieler1x == spieler2x && spieler1y == spieler2y && bool4) {
-
-                spielfeldprint(spieler1x, spieler1y, spieler2x, spieler2y, avatarstrings1, avatarstrings2, names1);
-                TimeUnit.MILLISECONDS.sleep(1000);
-
-                System.out.println("Es kommt zu einem Kampf");
-                TimeUnit.MILLISECONDS.sleep(500);
-
-                System.out.println(names1 + " würfelt");
-                TimeUnit.MILLISECONDS.sleep(2000);
-                int wuerfels1 = random.nextInt(6) + 1;
-                System.out.println(names1 + " hat folgendes gewürfelt: " + wuerfels1);
-                TimeUnit.MILLISECONDS.sleep(2000);
-
-                System.out.println(names2 + " würfelt");
-                TimeUnit.MILLISECONDS.sleep(2000);
-                int wuerfels2 = random.nextInt(6) + 1;
-                System.out.println(names2 + " hat folgendes gewürfelt: " + wuerfels2);
-                TimeUnit.MILLISECONDS.sleep(2000);
-
-                if (wuerfels1 > wuerfels2) {
-                    System.out.print("\u001b[32;1m .----------------.  .----------------.  .----------------.  .----------------.  .-----------------. .-----------------. .----------------.  .-----------------.\n" +
-                            "| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |\n" +
-                            "| |    ______    | || |  _________   | || | _____  _____ | || |     ____     | || | ____  _____  | || | ____  _____  | || |  _________   | || | ____  _____  | |\n" +
-                            "| |  .' ___  |   | || | |_   ___  |  | || ||_   _||_   _|| || |   .'    `.   | || ||_   \\|_   _| | || ||_   \\|_   _| | || | |_   ___  |  | || ||_   \\|_   _| | |\n" +
-                            "| | / .'   \\_|   | || |   | |_  \\_|  | || |  | | /\\ | |  | || |  /  .--.  \\  | || |  |   \\ | |   | || |  |   \\ | |   | || |   | |_  \\_|  | || |  |   \\ | |   | |\n" +
-                            "| | | |    ____  | || |   |  _|  _   | || |  | |/  \\| |  | || |  | |    | |  | || |  | |\\ \\| |   | || |  | |\\ \\| |   | || |   |  _|  _   | || |  | |\\ \\| |   | |\n" +
-                            "| | \\ `.___]  _| | || |  _| |___/ |  | || |  |   /\\   |  | || |  \\  `--'  /  | || | _| |_\\   |_  | || | _| |_\\   |_  | || |  _| |___/ |  | || | _| |_\\   |_  | |\n" +
-                            "| |  `._____.'   | || | |_________|  | || |  |__/  \\__|  | || |   `.____.'   | || ||_____|\\____| | || ||_____|\\____| | || | |_________|  | || ||_____|\\____| | |\n" +
-                            "| |              | || |              | || |              | || |              | || |              | || |              | || |              | || |              | |\n" +
-                            "| '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |\n" +
-                            " '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'");
-                    System.out.println("\n\u001b[0m Herzlichen Glückwunsch " + names1 + " du hast gewonnen!");
-                    bool4 = false;
-                } else if (wuerfels1 == wuerfels2) {
-                    System.out.println("Das ist ein Unentschieden und es wird erneut gewürfelt");
-                    TimeUnit.MILLISECONDS.sleep(2000);
-                } else {
-                    System.out.println("Dein Gegner " + names2 + " hat dich im Kampf bezwungen, viel Glück beim nächsten mal!");
-                    bool4 = false;
-                }
-            }
-        }
+        spielAblauf(currentPositionS1, currentPositionS2, avatarstrings1, avatarstrings2, names1, names2);
     }
 }
