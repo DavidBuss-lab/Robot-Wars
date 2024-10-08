@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-    public static void spielfeldprint(Point currentPositionS1, Point currentPositionS2, String avatarstrings1, String avatarstrings2, String name) throws InterruptedException {
+    public static void spielfeldPrint(Point currentPositionS1, Point currentPositionS2, String avatarstrings1, String avatarstrings2, String name) throws InterruptedException {
         int[][] spielfeldValue = {{3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
                 {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
                 {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
@@ -43,14 +43,14 @@ public class Main {
         }
 
 
-        System.out.println("Der Roboter " + name + " befindet sich auf der X-Koordinate:");
+        System.out.println("Der Roboter " + name + " befindet sich auf der X-Koordinate: ");
         System.out.println(currentPositionS1.x);
-        System.out.println("und auf der Y-Koordinate:");
+        System.out.println("und auf der Y-Koordinate: ");
         System.out.println(currentPositionS1.y);
 
     }
 
-    public static Point bewegung(Point currentPosition, String avatarstring, String name, boolean bool4) {
+    public static Point bewegungSpieler(Point currentPosition, String avatarstring, String name, boolean bool4) {
         boolean bool5 = false;
         int b = 0;
         Scanner scanner = new Scanner(System.in);
@@ -105,7 +105,7 @@ public class Main {
     }
 
 
-    public static String namensueberpruefung(String name) {
+    public static String nameUeberpruefen(String name) {
         boolean bool = false;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Wähle einen Namen für den Roboter");
@@ -134,7 +134,7 @@ public class Main {
         return name;
     }
 
-    public static String avatarauswahl(String avatarstring) {
+    public static String avatarAuswahl(String avatarstring) {
         boolean boolavatar = true;
         Scanner scanner = new Scanner(System.in);
 
@@ -205,15 +205,30 @@ public class Main {
         return farbe;
     }
 
+    private static Point bewegungGegner (Point currentpositionS1, Point currentPositionS2) {
+
+        if (currentpositionS1.x > currentPositionS2.x) {
+            currentPositionS2.x++;
+        } else if (currentpositionS1.x < currentPositionS2.x) {
+            currentPositionS2.x--;
+        } else if (currentpositionS1.y > currentPositionS2.y) {
+            currentPositionS2.y++;
+        } else if (currentpositionS1.y < currentPositionS2.y) {
+            currentPositionS2.y--;
+        }
+        return currentPositionS2;
+    }
+
     private static void spielAblauf(Point currentPositionS1, Point currentPositionS2, String avatarstrings1, String avatarstrings2, String names1, String names2) throws InterruptedException {
         boolean bool4 = true;
         Random random = new Random();
 
         while (bool4) {
 
-            spielfeldprint(currentPositionS1, currentPositionS2, avatarstrings1, avatarstrings2, names1);
+            spielfeldPrint(currentPositionS1, currentPositionS2, avatarstrings1, avatarstrings2, names1);
 
-            currentPositionS1 = bewegung(currentPositionS1, avatarstrings1, names1, bool4);
+            currentPositionS1 = bewegungSpieler(currentPositionS1, avatarstrings1, names1, bool4);
+            currentPositionS2 = bewegungGegner(currentPositionS1, currentPositionS2);
 
             if (currentPositionS1.x == 29) {
                 break;
@@ -222,7 +237,7 @@ public class Main {
             while (currentPositionS1.x == currentPositionS2.x && currentPositionS1.y == currentPositionS2.y) {
                 bool4 = false;
 
-                spielfeldprint(currentPositionS1, currentPositionS2, avatarstrings1, avatarstrings2, names1);
+                spielfeldPrint(currentPositionS1, currentPositionS2, avatarstrings1, avatarstrings2, names1);
                 TimeUnit.MILLISECONDS.sleep(1000);
 
                 System.out.println("Es kommt zu einem Kampf");
@@ -266,7 +281,7 @@ public class Main {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        Point currentPositionS1 = new Point(0, 0);
+        Point currentPositionS1 = new Point(8, 10);
         Point currentPositionS2 = new Point(7, 2);
         Scanner scanner = new Scanner(System.in);
 
@@ -304,20 +319,15 @@ public class Main {
         String farbes2 = "";
 
         System.out.println("Herzlich Willkommen bei Robot-Wars");
+
         System.out.println("Spieler:");
-
-        names1 = namensueberpruefung(names1);
-
-        avatarstrings1 = avatarauswahl(avatarstrings1);
-
+        names1 = nameUeberpruefen(names1);
+        avatarstrings1 = avatarAuswahl(avatarstrings1);
         farbes1 = farbe(names1, farbes1);
 
         System.out.println("Jetzt für deinen Gegner:");
-
-        names2 = namensueberpruefung(names2);
-
-        avatarstrings2 = avatarauswahl(avatarstrings2);
-
+        names2 = nameUeberpruefen(names2);
+        avatarstrings2 = avatarAuswahl(avatarstrings2);
         farbes2 = farbe(names2, farbes1);
 
         names1 = farbes1 + names1 + "\u001b[0m";
@@ -330,31 +340,6 @@ public class Main {
         System.out.println("Dein Gegner heißt: " + names2);
         System.out.println("Dein Gegner sieht so aus : " + avatarstrings2);
 
-        boolean checkxInBound = false;
-        boolean checkyInBound = false;
-
-        System.out.println("\nWähle eine X-Koordinate");
-        currentPositionS1.x = scanner.nextInt();
-
-        while (!checkxInBound) {
-            if (currentPositionS1.x < 16 && currentPositionS1.x > 0) {
-                checkxInBound = true;
-            } else {
-                System.out.println("Wähle eine Zahl im Spielfeld (15x10)");
-                currentPositionS1.x = scanner.nextInt();
-            }
-        }
-        System.out.println("\nwähle eine Y-Koordinate");
-        currentPositionS1.y = scanner.nextInt();
-
-        while (!checkyInBound) {
-            if (currentPositionS1.y <= 10 && currentPositionS1.y >= 0) {
-                checkyInBound = true;
-            } else {
-                System.out.println("Wähle eine Zahl im Spielfeld (15x10)");
-                currentPositionS1.y = scanner.nextInt();
-            }
-        }
         spielAblauf(currentPositionS1, currentPositionS2, avatarstrings1, avatarstrings2, names1, names2);
     }
 }
